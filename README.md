@@ -12,3 +12,7 @@ Low-level system design of a Bank machine system that provides customers with ba
 ### assumption
 - ATM only deals with credit cards from the same bank type.
 
+## Class diagram
+
+![class diagram](https://github.com/mohamedAbdelaleem/Bank-Machine-Sysetm/blob/main/uml%20class%20diagram.svg)
+
