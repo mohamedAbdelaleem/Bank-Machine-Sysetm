@@ -1,6 +1,6 @@
 package BankMachine;
 
-import java.util.*;
+import java.time.LocalDateTime;
 
 public class CreditCard {
     
@@ -8,18 +8,17 @@ public class CreditCard {
     private Bank bankType;
     private String accountID;
     private String pin;
-    private Date validThru;
+    private LocalDateTime validThru;
     private int balance;
 
     public CreditCard(int id, Bank bankType, String accountID,
-                      String pin, Date validThru, int balance)
+                      String pin, LocalDateTime validThru)
     {
         this.id = id;
         this.bankType = bankType;
         this.accountID = accountID;
         this.pin = pin;
         this.validThru = validThru;
-        this.balance = balance;
 
 
     }
@@ -44,7 +43,7 @@ public class CreditCard {
         return this.pin;
     }
 
-    public Date getValidThru() {
+    public LocalDateTime getValidThru() {
         return this.validThru;
     }
 }
