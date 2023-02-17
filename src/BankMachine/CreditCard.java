@@ -46,4 +46,12 @@ public class CreditCard {
     public LocalDateTime getValidThru() {
         return this.validThru;
     }
+
+    public void increaseBalance(int amount){
+        this.balance += amount;
+    }
+
+    public void decreaseBalance(int amount){
+        this.balance -= amount;
+    }
 }
