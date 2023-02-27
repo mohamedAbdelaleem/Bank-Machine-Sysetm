@@ -4,10 +4,11 @@ import java.time.LocalDateTime;
 
 public class Transaction {
     
-    private int id;
-    private CreditCard card;
-    private int amount;
-    private LocalDateTime date;
+    protected int id;
+    protected CreditCard card;
+    protected int amount;
+    protected LocalDateTime date;
+    protected boolean status;
 
     public Transaction(int id, CreditCard card, int amount, LocalDateTime date){
         this.id = id;
@@ -32,4 +33,13 @@ public class Transaction {
         return this.date;
     }
 
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public boolean getStatus(){
+        return this.status;
+    }
+
+    public void apply(){};
 }

@@ -11,33 +11,36 @@ public class TransactionsController {
         this.transactions = new HashMap<Integer, Transaction>();
     }
 
-    public boolean processWithdraw(CreditCard card, int amount){
+    public Transaction processWithdraw(CreditCard card, int amount){
         
-        if (amount > 5000 || amount < 20){
-            System.out.println("Invalid Entry!\nMin is $20\tMax is $5000");
-            return false;
-        }
 
-        Transaction transaction = new Withdraw(transactions.size(), card,
+        Transaction transaction = new Withdraw(transactions.size()+1, card,
                                                amount, LocalDateTime.now());
 
-        card.decreaseBalance(amount);
-        this.transactions.put(transaction.getID(), transaction);
-        return true;
+        if (amount > card.getBalance()){
+            System.out.println("Your Balance is less than that amount!");
+            transaction.setStatus(false);
+        }
+
+        return transaction;
+       
     }
 
-    public boolean processDeposit(CreditCard card, int amount){
+    public Transaction processDeposit(CreditCard card, int amount){
 
-        if (amount > 5000 || amount < 20){
-            System.out.println("Invalid Entry!\nMin is $20\tMax is $5000");
-            return false;
-        }
-
-        Transaction transaction = new Deposit(transactions.size(), card,
+        Transaction transaction = new Deposit(transactions.size()+1, card,
                                                amount, LocalDateTime.now());
+        
 
-        card.increaseBalance(amount);
+        
+        return transaction;
+    
+    }
+
+    public void saveTransaction(Transaction transaction){
+        if (transaction.getStatus()){
+            transaction.apply();
+        }
         this.transactions.put(transaction.getID(), transaction);
-        return true;
     }
 }

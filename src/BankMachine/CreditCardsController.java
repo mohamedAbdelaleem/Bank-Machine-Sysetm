@@ -82,7 +82,7 @@ public class CreditCardsController {
         return creditCards.containsKey(id);
     }
 
-    public CreditCard gCreditCard(int id){
+    public CreditCard getCreditCard(int id){
         return creditCards.get(id);
     }
 

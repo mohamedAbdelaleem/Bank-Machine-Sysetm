@@ -20,6 +20,23 @@ public class BankMasr implements Bank{
         return BankMasr.bankSystem;
     }
     
+    public void addATM(ATM atm){
+        int atmID = bankMachines.size();
+        atm.setID(atmID);
+
+        cashFiller filler = new cashFiller();
+        filler.fill(atm);
+
+        bankMachines.put(atmID, atm);
+    }
+
+    public void sendCashFiller(int atmID){
+        ATM atm = bankMachines.get(atmID);
+
+        cashFiller filler = new cashFiller();
+        filler.fill(atm);
+    }
+
     @Override
     public CustomersController getCustomersController() {
         return this.customersController;
