@@ -12,7 +12,7 @@ public class BankMasr implements Bank{
     
     private BankMasr(){
         this.customersController = new CustomersController();
-        this.creditCardsController = new CreditCardsController(); 
+        this.creditCardsController = new CreditCardsController(bankSystem); 
         this.transactionsController = new TransactionsController();
     }
 
@@ -24,16 +24,17 @@ public class BankMasr implements Bank{
         int atmID = bankMachines.size();
         atm.setID(atmID);
 
-        cashFiller filler = new cashFiller();
+        CashFiller filler = new CashFiller();
         filler.fill(atm);
 
         bankMachines.put(atmID, atm);
     }
 
+    @Override
     public void sendCashFiller(int atmID){
         ATM atm = bankMachines.get(atmID);
 
-        cashFiller filler = new cashFiller();
+        CashFiller filler = new CashFiller();
         filler.fill(atm);
     }
 

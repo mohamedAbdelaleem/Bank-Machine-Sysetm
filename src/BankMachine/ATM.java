@@ -1,22 +1,19 @@
 package BankMachine;
 
-import java.util.ArrayList;
-
 public class ATM {
     
     private int id;
     private Bank bankType;
     private int cashAmount;
     private CreditCard currCard;
-    private ArrayList<Transaction> sessionTransactions;
+    private ReceiptCreator receiptCreator;
 
     public ATM(Bank bankType){
         this.bankType = bankType;
-        this.sessionTransactions = new ArrayList<Transaction>();
     }
     
     public boolean scan(int cardID){
-        Scanner scanner = new Scanner();
+        CardsScanner scanner = new CardsScanner();
         if (!scanner.checkCard(cardID, this.bankType)){
             return false;
         }
@@ -49,17 +46,19 @@ public class ATM {
         }
 
 
-        Transaction transaction = currCard.getBankType().getTransactionsController()
+        Withdraw transaction = currCard.getBankType().getTransactionsController()
                                     .processWithdraw(currCard, amount);
         
         if (cashAmount < amount){
             transaction.setStatus(false);
+            this.requestCash();
         }
         else{
             transaction.setStatus(true);
         }
+
         currCard.getBankType().getTransactionsController().saveTransaction(transaction);
-        this.sessionTransactions.add(transaction);
+        this.receiptCreator.createWithdrawReceipt(transaction);;
         return true;
     }
 
@@ -73,29 +72,36 @@ public class ATM {
             return false;
         }
         
-        Transaction transaction = currCard.getBankType().getTransactionsController()
+        Deposit transaction = currCard.getBankType().getTransactionsController()
         .processDeposit(currCard, amount);
         
         transaction.setStatus(true);
         currCard.getBankType().getTransactionsController().saveTransaction(transaction);
-        this.sessionTransactions.add(transaction);
+        this.receiptCreator.createDepositReceipt(transaction);
         return true;
+    }
+    
+    public void printReceipt(){
+        this.receiptCreator.printReceipt();
+    }
+
+    public void out(){
+        System.out.println("Get Your Card..");
+        this.currCard = null;
+        this.receiptCreator.resetReceipt();
+    }
+
+    private void requestCash(){
+        this.bankType.sendCashFiller(this.id);
     }
 
     private boolean validateAmount(int amount){
         return amount > 5000 || amount < 20;
     }
 
-    public void out(){
-        System.out.println("Get Your Card..");
-        this.currCard = null;
-        this.sessionTransactions = null;
-    }
-
     public void setID(int id){
         this.id = id;
     }
-
 
     public void setCash(int amount){
         this.cashAmount = amount;

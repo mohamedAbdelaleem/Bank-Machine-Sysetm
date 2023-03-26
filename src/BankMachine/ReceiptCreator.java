@@ -21,7 +21,8 @@ public class ReceiptCreator {
         }  
         catch(Exception e)  {  
             e.printStackTrace();  
-        }  
+        }
+        this.resetReceipt();;
     }
 
     public void createWithdrawReceipt(Withdraw withdraw){
@@ -90,5 +91,8 @@ public class ReceiptCreator {
       return massage;
     }
 
+    public void resetReceipt(){
+      this.receipt = null;
+    }
 
 }

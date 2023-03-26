@@ -20,16 +20,16 @@ public class CustomersController {
     }
 
 
-    public void addCustomer(String nationalID, String name){
+    public boolean addCustomer(String nationalID, String name){
 
         if (! validateNationalId(nationalID)){
             System.out.println("Invalid National ID!");
-            return;
+            return false;
         }
 
         if (nationalIDsCustomersMap.containsKey(nationalID)){
             System.out.println("This National ID is already exist!");
-            return;
+            return false;
         }
         
         int customersNum = customers.size();
@@ -37,11 +37,22 @@ public class CustomersController {
 
         Customer customer = new Customer(nationalID, name, newAccountID);
         customers.put(newAccountID, customer);
+        return true;
     }
 
+    
     public boolean search(String accountID){
         return this.customers.containsKey(accountID);
     }
 
+    public void customerDetails(String nationalID){
+        Customer customer = nationalIDsCustomersMap.get(nationalID);
+        if(customer == null){
+            System.out.println("Invalid national ID!!");
+            return;
+        }
+        System.out.println("Name: " + customer.getName() 
+                            + " AccountID: " + customer.getAccountID());
+    }
 
 }

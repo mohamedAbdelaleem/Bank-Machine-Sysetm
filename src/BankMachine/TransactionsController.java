@@ -11,10 +11,10 @@ public class TransactionsController {
         this.transactions = new HashMap<Integer, Transaction>();
     }
 
-    public Transaction processWithdraw(CreditCard card, int amount){
+    public Withdraw processWithdraw(CreditCard card, int amount){
         
 
-        Transaction transaction = new Withdraw(transactions.size()+1, card,
+        Withdraw transaction = new Withdraw(transactions.size()+1, card,
                                                amount, LocalDateTime.now());
 
         if (amount > card.getBalance()){
@@ -26,9 +26,9 @@ public class TransactionsController {
        
     }
 
-    public Transaction processDeposit(CreditCard card, int amount){
+    public Deposit processDeposit(CreditCard card, int amount){
 
-        Transaction transaction = new Deposit(transactions.size()+1, card,
+        Deposit transaction = new Deposit(transactions.size()+1, card,
                                                amount, LocalDateTime.now());
         
 

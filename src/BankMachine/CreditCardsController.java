@@ -5,16 +5,18 @@ import java.util.*;
 
 public class CreditCardsController {
     
+    private Bank bankType;
     private HashMap<Integer, CreditCard> creditCards;
     private HashMap<Integer, LocalDateTime> deactivatedCards;   // mapping cards ids -> the date of activation 
     private HashMap<String, ArrayList<CreditCard>> customersCardsMap;
     private HashMap<Integer, ArrayList<Attempt>> loginAttempts;
 
-    public CreditCardsController(){
+    public CreditCardsController(Bank bankType){
         this.creditCards = new HashMap<Integer, CreditCard>();
         this.deactivatedCards = new HashMap<Integer, LocalDateTime>();
         this.customersCardsMap = new HashMap<String, ArrayList<CreditCard>>();
         this.loginAttempts = new HashMap<Integer, ArrayList<Attempt>>();
+        this.bankType = bankType;
     }
 
     private boolean validatePin(String pin){
@@ -26,9 +28,14 @@ public class CreditCardsController {
         return pin.length() == 4;
     }
 
-    public void createCreditCard(String accountID, Bank bankType, String pin){
+    public void createCreditCard(String accountID, String pin){
         if (!validatePin(pin)){
             System.out.println("Not a valid Pin!");
+            return;
+        }
+
+        if(!bankType.getCustomersController().search(accountID)){
+            System.out.println("Invalid Account ID!!");
             return;
         }
         
@@ -37,6 +44,10 @@ public class CreditCardsController {
 
         CreditCard card = new CreditCard(cardID, bankType, accountID, pin, validThru);
         creditCards.put(cardID, card);
+        // if(!customersCardsMap.containsKey(accountID)){
+            
+        // }
+        customersCardsMap.get(accountID).add(card);
         
         System.out.println("Successively Created New Credit Card");
         System.out.println("Credit Card ID is: " + cardID + "\tSave it for later usage");

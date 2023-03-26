@@ -1,6 +1,6 @@
 package BankMachine;
 
-public class Scanner {
+public class CardsScanner {
     
     public boolean checkCard(int cardID, Bank bank){
         return bank.getCreditCardsController().searchCreditCard(cardID);
