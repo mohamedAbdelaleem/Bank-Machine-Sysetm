@@ -1,0 +1,6 @@
+		Withdraw Transaction
+Transaction: 2
+Status: 
+Successful
+Amount: 300
+Current Balance: 200

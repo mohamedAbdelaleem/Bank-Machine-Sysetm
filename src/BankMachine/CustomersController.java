@@ -7,6 +7,10 @@ public class CustomersController {
     private HashMap<String, Customer> customers;
     private HashMap<String, Customer> nationalIDsCustomersMap;
 
+    public CustomersController(){
+        this.customers = new HashMap<String, Customer>();
+        this.nationalIDsCustomersMap = new HashMap<String, Customer>();
+    }
 
     private boolean validateNationalId(String id){
         
@@ -23,12 +27,12 @@ public class CustomersController {
     public boolean addCustomer(String nationalID, String name){
 
         if (! validateNationalId(nationalID)){
-            System.out.println("Invalid National ID!");
+            System.out.println("\nInvalid National ID!\n");
             return false;
         }
 
         if (nationalIDsCustomersMap.containsKey(nationalID)){
-            System.out.println("This National ID is already exist!");
+            System.out.println("\nThis National ID is already exist!\n");
             return false;
         }
         
@@ -37,6 +41,7 @@ public class CustomersController {
 
         Customer customer = new Customer(nationalID, name, newAccountID);
         customers.put(newAccountID, customer);
+        this.nationalIDsCustomersMap.put(nationalID, customer);
         return true;
     }
 

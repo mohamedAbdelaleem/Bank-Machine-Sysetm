@@ -12,8 +12,9 @@ public class BankMasr implements Bank{
     
     private BankMasr(){
         this.customersController = new CustomersController();
-        this.creditCardsController = new CreditCardsController(bankSystem); 
+        this.creditCardsController = new CreditCardsController(this); 
         this.transactionsController = new TransactionsController();
+        this.bankMachines = new HashMap<Integer, ATM>();
     }
 
     public static Bank getBankSystem(){

@@ -8,13 +8,11 @@ public class CreditCardsController {
     private Bank bankType;
     private HashMap<Integer, CreditCard> creditCards;
     private HashMap<Integer, LocalDateTime> deactivatedCards;   // mapping cards ids -> the date of activation 
-    private HashMap<String, ArrayList<CreditCard>> customersCardsMap;
     private HashMap<Integer, ArrayList<Attempt>> loginAttempts;
 
     public CreditCardsController(Bank bankType){
         this.creditCards = new HashMap<Integer, CreditCard>();
         this.deactivatedCards = new HashMap<Integer, LocalDateTime>();
-        this.customersCardsMap = new HashMap<String, ArrayList<CreditCard>>();
         this.loginAttempts = new HashMap<Integer, ArrayList<Attempt>>();
         this.bankType = bankType;
     }
@@ -35,7 +33,7 @@ public class CreditCardsController {
         }
 
         if(!bankType.getCustomersController().search(accountID)){
-            System.out.println("Invalid Account ID!!");
+            System.out.println("Invalid Account ID!");
             return;
         }
         
@@ -44,13 +42,10 @@ public class CreditCardsController {
 
         CreditCard card = new CreditCard(cardID, bankType, accountID, pin, validThru);
         creditCards.put(cardID, card);
-        // if(!customersCardsMap.containsKey(accountID)){
-            
-        // }
-        customersCardsMap.get(accountID).add(card);
+        loginAttempts.put(cardID, new ArrayList<Attempt>());
         
-        System.out.println("Successively Created New Credit Card");
-        System.out.println("Credit Card ID is: " + cardID + "\tSave it for later usage");
+        System.out.println("\nSuccessively Created New Credit Card");
+        System.out.println("\nCredit Card ID is: " + cardID + "\tSave it for later usage");
         
     }
     
@@ -62,7 +57,7 @@ public class CreditCardsController {
         
         CreditCard card = creditCards.get(cardID);
         if(!card.getAccountID().equals(accountID)){
-            System.out.println("Invalid card id!");
+            System.out.println("Invalid Account id!");
             return;
         }
 
@@ -75,19 +70,6 @@ public class CreditCardsController {
         System.out.println("Successively Closed The Credit Card");
     }
 
-    public void showCustomerCards(String accountID){
-        if (!customersCardsMap.containsKey(accountID)){
-            System.out.println("Invalid Account ID");
-            return;
-        }
-        
-        ArrayList<CreditCard> cards = customersCardsMap.get(accountID);
-        System.out.println("Your cards:");
-        for (CreditCard card: cards){
-            System.out.println(card.getId());
-        }
-        System.out.println();
-    }
 
     public boolean searchCreditCard(int id){
         return creditCards.containsKey(id);

@@ -1,0 +1,6 @@
+		Deposit Transaction
+Transaction: 1
+Status: 
+Successful
+Amount: 500
+Current Balance: 500

@@ -3,7 +3,7 @@ package BankMachine;
 import java.io.*; 
 import java.awt.Desktop;  
 
-public class ReceiptCreator {
+public class ReceiptsManager {
     
     private File receipt;
 
@@ -27,7 +27,7 @@ public class ReceiptCreator {
 
     public void createWithdrawReceipt(Withdraw withdraw){
       try {
-        receipt = new File(withdraw.getID() + ".txt");
+        receipt = new File("receipts" + withdraw.getID() + ".txt");
         if (receipt.createNewFile()) {
           String content = withdrawReceiptContent(withdraw);
           FileWriter receiptWriter = new FileWriter(receipt);
@@ -42,7 +42,7 @@ public class ReceiptCreator {
     
     public void createDepositReceipt(Deposit deposit){
       try {
-        receipt = new File(deposit.getID() + ".txt");
+        receipt = new File("receipts" + deposit.getID() + ".txt");
         if (receipt.createNewFile()) {
           String content = depositReceiptContent(deposit);
           FileWriter receiptWriter = new FileWriter(receipt);
@@ -93,6 +93,16 @@ public class ReceiptCreator {
 
     public void resetReceipt(){
       this.receipt = null;
+      String directoryPath = "receipts";
+
+      File directory = new File(directoryPath);
+
+      if (directory.isDirectory()) {
+         File[] files = directory.listFiles();
+         for (File file : files) {
+            file.delete();
+         }
+      }
     }
 
 }

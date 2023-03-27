@@ -6,10 +6,11 @@ public class ATM {
     private Bank bankType;
     private int cashAmount;
     private CreditCard currCard;
-    private ReceiptCreator receiptCreator;
+    private ReceiptsManager receiptsManager;
 
     public ATM(Bank bankType){
         this.bankType = bankType;
+        this.receiptsManager = new ReceiptsManager();
     }
     
     public boolean scan(int cardID){
@@ -58,7 +59,7 @@ public class ATM {
         }
 
         currCard.getBankType().getTransactionsController().saveTransaction(transaction);
-        this.receiptCreator.createWithdrawReceipt(transaction);;
+        this.receiptsManager.createWithdrawReceipt(transaction);;
         return true;
     }
 
@@ -77,18 +78,25 @@ public class ATM {
         
         transaction.setStatus(true);
         currCard.getBankType().getTransactionsController().saveTransaction(transaction);
-        this.receiptCreator.createDepositReceipt(transaction);
+        this.receiptsManager.createDepositReceipt(transaction);
         return true;
     }
     
+    public void printBalance(){
+        if(this.currCard == null){
+            return;
+        }
+        System.out.println("Your Balance is: " + currCard.getBalance());
+    }
+
     public void printReceipt(){
-        this.receiptCreator.printReceipt();
+        this.receiptsManager.printReceipt();
     }
 
     public void out(){
         System.out.println("Get Your Card..");
         this.currCard = null;
-        this.receiptCreator.resetReceipt();
+        this.receiptsManager.resetReceipt();
     }
 
     private void requestCash(){
@@ -96,7 +104,7 @@ public class ATM {
     }
 
     private boolean validateAmount(int amount){
-        return amount > 5000 || amount < 20;
+        return !((amount > 5000) || (amount < 20));
     }
 
     public void setID(int id){
