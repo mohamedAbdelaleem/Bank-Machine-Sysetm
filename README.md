@@ -1,6 +1,9 @@
 # Bank-Machine-Sysetm
 Low-level system design of a Bank machine system that provides customers with banking services.
 
+### - designed the system and created the UML class diagram.
+### - implemented some common design patterns to make the system more flexible.
+
 ## Requirements
 
 - Customers can have multiple credit cards
